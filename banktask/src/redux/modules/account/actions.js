@@ -17,7 +17,7 @@ export const updateAccount = (id, amount, transactionType) => {
     type: TYPES.UPDATE_ACCOUNT,
     payload: {
       request: {
-        method: 'patch',
+        method: 'put',
         url: '/accounts',
         data: {
           id,

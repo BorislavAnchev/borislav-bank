@@ -23,24 +23,24 @@ describe('loadAccounts', () => {
 
 describe('updateAccount', () => {
   it('updateAccount should return an object with correct type and payload', () => { 
-    const mockId = '_u70nyuzcq';
-    const mockAmount = '300';
-    const mockTransactionType = 'Deposit';
+    const testId = '_u70nyuzcq';
+    const testAmount = '300';
+    const testTransactionType = 'Deposit';
     const expectedAction = {
       type: TYPES.UPDATE_ACCOUNT,
       payload: {
         request: {
-          method: 'patch',
+          method: 'put',
           url: '/accounts',
           data: {
-           id: mockId,
-           amount: mockAmount,
-           transactionType: mockTransactionType
+           id: testId,
+           amount: testAmount,
+           transactionType: testTransactionType
           }
         }
       }
     }
-    expect(updateAccount(mockId, mockAmount, mockTransactionType)).toEqual(expectedAction);
+    expect(updateAccount(testId, testAmount, testTransactionType)).toEqual(expectedAction);
   });
 });
 
@@ -67,8 +67,8 @@ describe('deleteAccount', () => {
 
 describe('createAccount', () => {
   it('should return the correct action', () => {
-    const mockIban = 'Test IBAN';
-    const mockCurrency = 'Test Currency';
+    const testIban = 'Test IBAN';
+    const testCurrency = 'Test Currency';
     const expectedAction =  {
       type: TYPES.CREATE_ACCOUNT,
       payload: {
@@ -76,8 +76,8 @@ describe('createAccount', () => {
           method: 'post',
           url: '/accounts',
           data: {
-            iban: mockIban,
-            currency: mockCurrency
+            iban: testIban,
+            currency: testCurrency
           }
         }
       },
@@ -85,6 +85,6 @@ describe('createAccount', () => {
         alert: 'Account created successfully!'
       }
     }
-    expect(createAccount(mockIban, mockCurrency)).toEqual(expectedAction);
+    expect(createAccount(testIban, testCurrency)).toEqual(expectedAction);
   });
 });
