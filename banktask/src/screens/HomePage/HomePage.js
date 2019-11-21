@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import InputField from '../../components/InputField/InputField';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import './styles.scss';
-import { updateAccount } from '../../redux/modules/account/actions';
+import { deleteAccount, updateAccount } from '../../redux/modules/account/actions';
 
 const HomePage = () => {
 
@@ -48,6 +49,19 @@ const HomePage = () => {
     }
   }
 
+  const onDeleteClick = () => {
+    if(!(/\w{10,24}/).test(id)) {
+      setSubmitWarning('Please select an account to delete!')
+    }
+    else {
+      if(window.confirm('Do you really want to remove this bank account?')) {
+        dispatch(deleteAccount(id));
+        setSubmitWarning('');
+        setId('');
+      }
+    }
+  }
+
   const balanceLabel = (id) => {
     if((/\w{10,24}/).test(id)) {
       return `${accounts[id].currency} ${accounts[id].balance}`;
@@ -86,6 +100,14 @@ const HomePage = () => {
             <Button
               onClick={() => handleSubmit(id, amount, transactionType)}
               data-testid='Submit Button'>Submit</Button>
+            <Link className="addAccount" to="/account/new" data-testid='Add account page link'>
+              <Button data-testid='Add Button'>Add an account</Button>
+            </Link>
+            <Button 
+              onClick={onDeleteClick}
+              data-testid='Delete Button'>
+              Delete Account
+            </Button>
             <p className='balance-section' data-testid='Current Balance Paragraph'>Current balance: {balanceLabel(id)}</p>
             <p className='submit-warning' data-testid='Submit Warning Paragraph'>{submitWarning}</p>
         </div>

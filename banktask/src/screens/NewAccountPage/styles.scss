@@ -1,0 +1,28 @@
+$danger: #dc3545;
+$clouway-blue: #0074A3;
+
+.currency-dropdown {
+  width: 20%;
+  max-width: 190px;
+  // display: inline;
+  margin: auto;
+  text-align: center;
+}
+
+.account-name-input {
+  margin: 10px auto;
+  display: block;
+  width: 230px;
+}
+
+.validation-warning {
+  text-align: center;
+  color: $danger;
+  //margin: 0px auto;
+}
+
+.account-explanation {
+  margin: 10px auto 10px auto;
+  text-align: center;
+  color: $clouway-blue;
+}

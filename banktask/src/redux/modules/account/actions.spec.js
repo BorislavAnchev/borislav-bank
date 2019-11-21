@@ -52,13 +52,10 @@ describe('deleteAccount', () => {
         request: {
           method: 'delete',
           url: '/accounts',
-          data: {
+          params: {
             id: 'TestID'
           }
         }
-      },
-      meta: {
-        alert: 'Account deleted successfully!'
       }
     }
     expect(deleteAccount('TestID')).toEqual(expectedAction);
@@ -80,9 +77,6 @@ describe('createAccount', () => {
             currency: testCurrency
           }
         }
-      },
-      meta: {
-        alert: 'Account created successfully!'
       }
     }
     expect(createAccount(testIban, testCurrency)).toEqual(expectedAction);

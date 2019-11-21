@@ -36,13 +36,10 @@ export const deleteAccount = (id) => {
       request: {
         method: 'delete',
         url: '/accounts',
-        data: {
+        params: {
           id
         }
       }
-    },
-    meta: {
-      alert: 'Account deleted successfully!'
     }
   }
 }
@@ -59,9 +56,6 @@ export const createAccount = (iban, currency) => {
           currency
         }
       }
-    },
-    meta: {
-      alert: 'Account created successfully!'
     }
   }
 }

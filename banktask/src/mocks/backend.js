@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { randomIdGenerator } from '../utils';
 
 const mock = new MockAdapter(axios);
 
@@ -135,4 +136,18 @@ mock.onPut('/accounts')
         balance: database[index]['balance'],
         history: database[index].history
         }]
+});
+
+mock.onDelete('/accounts').reply(({params}) => {
+  const { id } = params;
+  const index = database.findIndex(element => id === element.id);
+  database.splice(index, 1);
+  return [200, { id: params.id }]
+});
+
+mock.onPost('/accounts').reply(({data}) => {
+  data = JSON.parse(data);
+  const {iban, currency} = data;
+  database = [...database, { id: randomIdGenerator(), iban, currency, balance: '0.00', history: [] }]
+  return [200, database[database.length-1]];
 });
