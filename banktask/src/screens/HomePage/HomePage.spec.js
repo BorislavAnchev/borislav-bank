@@ -60,6 +60,11 @@ describe('Home page component ', () => {
     const { getByTestId } = renderWithRouter(<HomePage/>, { store: mockStore()});
     expect(getByTestId('Delete Button Primitive')).toBeInTheDocument();
   });
+
+  it('Should render a TransactionsHistory component', () => {
+    const { getByTestId } = renderWithRouter(<HomePage/>, { store: mockStore()});
+    expect(getByTestId('Transactions History Component Primitive')).toBeInTheDocument();
+  });
 });
 
 describe('Money Amount Warning paragraph', () => {
@@ -90,7 +95,14 @@ describe('Submit Warning paragraph', () => {
         id: '_u70nyuzcq',
         iban: 'BG12BUIN12341234567891',
         currency: 'BGN',
-        balance: '5678.00'
+        balance: '5678.00',
+        history: [
+          {
+            date: '05.01.2019',
+            debit: '500.00',
+            credit: ''
+          }
+        ]
       }
     }
   };
@@ -138,7 +150,14 @@ describe('Submit Warning paragraph', () => {
           id: '_u70nyuzcq',
           iban: 'BG12BUIN12341234567891',
           currency: 'BGN',
-          balance: '5678.00'
+          balance: '5678.00',
+          history: [
+            {
+              date: '05.01.2019',
+              debit: '500.00',
+              credit: ''
+            }
+          ]
         }
       }
     };
@@ -152,4 +171,48 @@ describe('Submit Warning paragraph', () => {
       expect(getByTestId('Current Balance Paragraph').textContent).toBe('Current balance: BGN 5678.00');
     });
   });  
+});
+
+describe('Transaction history section', () => {
+
+  afterEach(cleanup);
+
+  const initialState = {
+    accounts: {
+      _u70nyuzcq: {
+        id: '_u70nyuzcq',
+        iban: 'BG12BUIN12341234567891',
+        currency: 'BGN',
+        balance: '5678.00',
+        history: [
+          {
+            date: '05.01.2019',
+            debit: '500.00',
+            credit: ''
+          }
+        ]
+      }
+    }
+  };
+
+  const store = mockStore(initialState);
+
+  it('should only show the headers when an account is not selected', () => {
+    const { getByTestId } = renderWithRouter(<HomePage/>, { store: store });
+    expect(getByTestId('Date Column Header')).toBeInTheDocument();
+    expect(getByTestId('Deposit Column Header')).toBeInTheDocument();
+    expect(getByTestId('Withdraw Column Header')).toBeInTheDocument();
+  });
+
+  it('should show the correct account history when an account is selected', () => {
+    const { getByTestId, getByText } = renderWithRouter(<HomePage/>, { store: store });
+    fireEvent.touchEnd(getByText('Select an account'), { button: 0 });
+    fireEvent.click(getByText('BG12BUIN12341234567891'), { button: 0 });
+    expect(getByTestId('Date Column Header')).toBeInTheDocument();
+    expect(getByTestId('Deposit Column Header')).toBeInTheDocument();
+    expect(getByTestId('Withdraw Column Header')).toBeInTheDocument();
+    expect(getByTestId('Date Cell 1').textContent).toBe('05.01.2019');
+    expect(getByTestId('Debit Cell 1').textContent).toBe('500.00');
+    expect(getByTestId('Credit Cell 1').textContent).toBe('');
+  });
 });

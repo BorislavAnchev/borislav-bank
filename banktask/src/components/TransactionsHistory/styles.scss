@@ -1,0 +1,40 @@
+$danger: #dc3545;
+$clouway-blue: #0074A3;
+
+table {
+  margin: 0 auto;
+}
+
+td, thead {
+  border: 1px solid #ddd;
+}
+
+tr:hover {background-color: #ddd;}
+
+thead {
+  background-color: $clouway-blue;
+  color: white;
+  td {
+    width: 200px;
+  }
+}
+
+.container {
+  width: 100%;
+  text-align: center;
+  margin: 30px auto;
+}
+
+.credit {
+  color: $danger;
+  width: 200px;
+}
+
+.debit {
+  width: 200px;
+  color: green;
+}
+
+.date {
+  width: 200px;
+}

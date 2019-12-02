@@ -7,6 +7,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import './styles.scss';
 import { deleteAccount, updateAccount } from '../../redux/modules/account/actions';
+import TransactionsHistory from '../../components/TransactionsHistory/TransactionsHistory';
 
 const HomePage = () => {
 
@@ -110,6 +111,7 @@ const HomePage = () => {
             </Button>
             <p className='balance-section' data-testid='Current Balance Paragraph'>Current balance: {balanceLabel(id)}</p>
             <p className='submit-warning' data-testid='Submit Warning Paragraph'>{submitWarning}</p>
+            <TransactionsHistory history={(/\w{10,24}/).test(id) ? accounts[id].history : []} data-testid='Transactions History Component'/>
         </div>
     );
 }
